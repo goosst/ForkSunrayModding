@@ -65,9 +65,9 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 // see Wiki for wiring, how to position the module, and to configure the I2C pullup jumpers:   
 // https://wiki.ardumower.de/index.php?title=Ardumower_Sunray#IMU.2C_sensor_fusion
 
-#define MPU6050
+// #define MPU6050
 //#define MPU9150
-//#define MPU9250   // also choose this for MPU9255
+#define MPU9250  // also choose this for MPU9255
 //#define BNO055
 //#define ICM20948
 #define MPU_ADDR 0x69  // I2C address (0x68 if AD0=LOW, 0x69 if AD0=HIGH)
@@ -82,7 +82,7 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 // should the lift sensor be enabled? (yes: uncomment line, no: comment line)
 //#define ENABLE_LIFT_DETECTION  1
 // should the lift sensor be used for obstacle avoidance (if not, mower will simply go into error if lifted)
-#define LIFT_OBSTACLE_AVOIDANCE 1  
+// #define LIFT_OBSTACLE_AVOIDANCE 1  
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 //Modsection START
@@ -92,7 +92,7 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 //Mower general times and speeds with their condition parameters, this section is the easiest to be tuned for one´s needs... so feel free and just tune to what you want to see on the lawn 
 #define MOWSPINUPTIME               10000 // (ms) Adds time to rotate mowingdisc before starting moving, use high value if you enable ESCAPE_LAWN for good reading of idle mow motor RPM
 #define OVERLOADSPEED               0.15  // (m/s) if there is a overloadcurrent of a motordriver, mower will use OVERLOADSPEED
-#define TRACKSLOWSPEED              0.20  // (m/s) e.g the docking speed or functions of the future
+#define TRACKSLOWSPEED              0.05  // (m/s) e.g the docking speed or functions of the future
 #define NEARWAYPOINTSPEED           0.25  // (m/s) the speed of mower when reaching/leaving a waypoint
 #define NEARWAYPOINTDISTANCE        0.45  // (m) the distance of mower if approaching and leaving a waypoint and thus triggers NEARWAYPOINTSPEED of mower
 #define FLOATSPEED                  0.25  // (m/s) on GPS FLOAT SOLUTION, mower will use FLOATSPEED
@@ -113,26 +113,26 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 #define ANGLEPRECISE                5.0   // (deg) if Angle to point ist within 5deg, mower will continue with Linetracker.cpp Stanleycode and NEARWAYPOINT setup
 //use a PID controller for mowmotor to set an RPM instead of PWM? If you use this (there will be a console output with data after 10sec when you activate the mowmotor and this is enabled)
 //CONFIG HINT: for the following options it is important if you have mow motor odometrie: USE_MOW_RPM_SET, ADAPTIVE_SPEED_MODE, ESCAPE_LAWN_MODE. If you do not have odometrie: use mode 1 on both cases and set USE_MOW_RPM_SET = false, if you have odometrie use mode 2 on both cases and set USE_MOW_RPM_SET = true (recommended)
-#define USE_MOW_RPM_SET             true  // uses RPM instead of PWM to set mowmotor (RPM_FAULT_DETECTION of orig Sunray is best to be set TRUE for all RPM based functions!!)
+#define USE_MOW_RPM_SET             false  // uses RPM instead of PWM to set mowmotor (RPM_FAULT_DETECTION of orig Sunray is best to be set TRUE for all RPM based functions!!)
 #define MOWMOTOR_RPM_OFFSET         110   // compensate small RPM offsets (positive if RPM reading is less then RPM setpoint)
 #define MOWMOTOR_PID_KP             0.0024// (0.0024 Mowmotordriver DRV8308) (0.0018 JYQD) this is enough to compensate battery drainage over time and have a slow spinup, there may be a controlleroffset to rpm which has to be thought of... RPM_OFFSET
 #define MOWMOTOR_PID_KI             0.002 // (0.04 (Mowmotordriver DRV8308/JYQD))
 #define MOWMOTOR_PID_KD             0.00  // (0.0000 (Mowmotordriver DRV8308/JYQD))
 //adaptive_speed settings on RPM or LOAD of mowmotor (consider if you have mowmotor odometrie)
-#define ADAPTIVE_SPEED              true  // if true, mowing speed will adjust to RPM or MOWMOTORPOWER of mow motor on all forward speed mow operations
-#define ADAPTIVE_SPEED_MODE         2     // (1, 2) adaptive speed modes. mode 1 - uses mowmotorpower measurement for speeding up/down; mode 2 - uses rpm measurement of mowmotor for speeding up/down
+#define ADAPTIVE_SPEED              false  // if true, mowing speed will adjust to RPM or MOWMOTORPOWER of mow motor on all forward speed mow operations
+#define ADAPTIVE_SPEED_MODE         1     // (1, 2) adaptive speed modes. mode 1 - uses mowmotorpower measurement for speeding up/down; mode 2 - uses rpm measurement of mowmotor for speeding up/down
 #define MOWPOWERMAX_AUTO            true  // uses highest actual measured mowPower during operation, if true MOWPOWERMAX is ignored
 #define MOWPOWERMIN                 10.0  // (Watt) idle Power of Mowmotor or minimum load power of mowmotor, if under this load mower will have maximum speed
 #define MOWPOWERMAX                 35.0  // (Watt) max load power of mowmotor, when hitting this load mower will be at minspeed
 #define MOW_RPM_NORMAL              3000  // (3200)(rpm, only used if USE_MOW_RPM_SET = true) mow motor rpm for mowing (WARNING, you should check if your rpm output works as espected! if it does work, but the reading is wrong, you need to calculate the mowmotorticks per second according to realistic rpm!)
 #define MOW_RPM_SLOW                3300  // (3400)(rpm, only used if USE_MOW_RPM_SET = true) mow motor rpm when MOW_RPMtr_SLOW (%) of MOW_RPM_NORMAL (rpm) is met. Should be higher or the same as MOW_RPM_NORMAL
 #define MOW_RPM_RETRY               3600  // (3600)(rpm, only used if USE_MOW_RPM_SET = true) mow motor rpm when MOW_RPMtr_RETRY (%) of MOW_RPM_NORMAL (rpm) is met. Should be higher or the same as MOW_RPM_SLOW4 (is only used by ESCAPE_LAWN)
-#define MOW_PWM_NORMAL              185   // (pwm, only used if USE_MOW_RPM_SET = false) pwm of mow motor for normal mowing
+#define MOW_PWM_NORMAL              195   // (pwm, only used if USE_MOW_RPM_SET = false) pwm of mow motor for normal mowing
 #define MOW_PWM_SLOW                205   // (pwm, only used if USE_MOW_RPM_SET = false) pwm of mow motor when during mowing a keepslow state is triggered. Should be higher or the same as MOW_PWM_NORMAL
 #define MOW_PWM_RETRY               235   // (pwm, only used if USE_MOW_RPM_SET = false) pwm of mow motor when during mowing a retryslow state is triggered (after escape lawn). Should be higher or the same as MOW_PWM_SLOW
 //escapeLawn operation, mower will backup on a mowmotor stall and retry with given values... after the first try and still stalling, it backs up and waits for mowmotor to recover
-#define ESCAPE_LAWN                 true  // mower drives reverse if true and RPM stall of mow motor is detected by more than MOW_RPMtr_STALL(percentage), only available if ENABLE_RPM_FAULT_DETECTION true
-#define ESCAPE_LAWN_MODE             2    // (1, 2) escape lawn modes to trigger escape becouse of high motormow load: mode 1 - uses mowmotorpower for triggering, mode 2 - uses rpm for triggering
+#define ESCAPE_LAWN                 false  // mower drives reverse if true and RPM stall of mow motor is detected by more than MOW_RPMtr_STALL(percentage), only available if ENABLE_RPM_FAULT_DETECTION true
+#define ESCAPE_LAWN_MODE             1    // (1, 2) escape lawn modes to trigger escape becouse of high motormow load: mode 1 - uses mowmotorpower for triggering, mode 2 - uses rpm for triggering
 #define MOW_POWERtr_STALL           80    // (%, only used if ESCAPE_LAWN_MODE = 1) if power of mowmotor exceeds e.g 90% of MOWPOWERMAX, escapelawn is triggered 
 #define MOW_POWERtr_SLOW            70    // (%, only used if ESCAPE_LAWN_MODE = 1) if power of mowmotor exceeds e.g 70% of MOWPOWERMAX, keepslow is triggered
 #define MOW_RPMtr_STALL             60    // (70)(%, only used if ESCAPE_LAWN_MODE = 2) if RPM of mowmotor stalls under % of MOW_RPM_NORMAL mower will back up with ESCAPELAWNDISTANCE and ESCAPELAWNSPEED and try again
@@ -149,7 +149,7 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 #define RETRYSLOWTIME               15000 // (ms) mower will continue slow with RETRY_SLOW_SPEED after ESCAPELAWN operation (reversing triggered by MOW_RPMtr_RETRY (%)) for RETRYSLOWTIME, if a MOW_RPMtr_SLOW will happen again in this retryslowstate, mower resets this timer until no rpm stall occurs in set time
 #define KEEPSLOWTIME                15000 // (ms) mower will continue slow with KEEP_SLOW_SPEED for given Time if MOW_RPMtr_SLOW (%) was met... if a MOW_RPMtr_SLOW will happen again during keepslowstate, mower resets this timer until no rpm stall occurs in set time.   
 //stanley options for experiments
-#define MAP_STANLEY_CONTROL         true  // if true, stanley values will be mapped linear from MOTOR_MIN_SPEED-->MOTOR_MAX_SPEED with SC_P_*|SC_K_* to actual speedset of mower (recommended if you use high operation speeds)
+#define MAP_STANLEY_CONTROL         false  // if true, stanley values will be mapped linear from MOTOR_MIN_SPEED-->MOTOR_MAX_SPEED with SC_P_*|SC_K_* to actual speedset of mower (recommended if you use high operation speeds)
 #define STANLEYNORMALMUL            false // if true, StanleyNormal parameters in Sunray-App will be multiplied by 10! (0,1 = 1) (for testing)
 //svol0s GPS reboot option after undocking-->mowing
 #define GPS_REBOOT                  true  // if false and DOCK_POINT_GPS_REBOOT is not 0, mower will wait at the DOCK_POINT_GPS_REBOOT point for fix without rebooting GPS, if false and DOCK_POINT_GPS_REBOOT = 0 this function is off (hopefully)
@@ -178,7 +178,7 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 #define PWM_GEAR                    1     // PWM for DRVFIX efforts..
 #define PWM_MOW                     1     // PWM for DRVFIX efforts..
 //try to fix 8308 driver with moving, only works reliable with "DOCK_RETRY_TOUCH = true"! tested and seems to be a valid workaround for the DRV8308 related dock stuck issue (keep FALSE if you have no issues or no DRV8308)
-#define MOVE_REGULARLY              true  // if true, mower will move in dock in given MOVE_AGAIN_AFTER time, kk: move mower to keep 8308 alive
+#define MOVE_REGULARLY              false  // if true, mower will move in dock in given MOVE_AGAIN_AFTER time, kk: move mower to keep 8308 alive
 #define MOVE_AGAIN_AFTER            10.0  // kk: move the mower every xx minutes
 #define MOVING_TIME                 400   // kk: time (ms) for moving back
 #define SWITCH_OFF_TRACTION_MOTORS  true  // should tractionmotors be disabled in dock?
@@ -198,9 +198,9 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 //  via 'File->Preferences->Full output during compile') - detailed steps here:  
 // https://wiki.ardumower.de/index.php?title=Ardumower_Sunray#SD_card_module
 // https://wiki.ardumower.de/index.php?title=Ardumower_Sunray#SD_card_logging
-#define ENABLE_SD      1                 // enable SD card services (resuming, logging)? (uncomment to activate)
+// #define ENABLE_SD      1                 // enable SD card services (resuming, logging)? (uncomment to activate)
 //#define ENABLE_SD_LOG  1                 // enable SD card logging? uncomment to activate (not recommended - WARNING: may slow down system!)
-#define ENABLE_SD_RESUME  1              // enable SD card map load/resume on reset? (uncomment to activate)
+// #define ENABLE_SD_RESUME  1              // enable SD card map load/resume on reset? (uncomment to activate)
 
 
 // ------ odometry -----------------------------------
@@ -218,7 +218,7 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 #define FREEWHEEL_IS_AT_BACKSIDE   true  // default Ardumower: true   (change to false, if your freewheel is at frontside) - this is used for obstacle avoidance
 #define WHEEL_BASE_CM         36         // wheel-to-wheel distance (cm)        
 #define WHEEL_DIAMETER        250        // (250) wheel diameter (mm)                 
-#define MOWER_SIZE            1         // mower / chassis size / length in cm
+#define MOWER_SIZE            60         // mower / chassis size / length in cm
 
 #define ENABLE_ODOMETRY_ERROR_DETECTION  true    // use this to detect odometry erros
 //#define ENABLE_ODOMETRY_ERROR_DETECTION  false
@@ -231,13 +231,13 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 // #define TICKS_PER_REVOLUTION 975 /2
 
 // ...for the newer 42mm diameter motor (green connector) https://www.marotronics.de/MA42-DC-Planeten-Getriebemotor-24-Volt-mit-HallIC-30-33-RPM-8mm-Welle-ab-2-Stueck-Staffelpreis
-// #define TICKS_PER_REVOLUTION  696 /2   // odometry ticks per wheel revolution 
+#define TICKS_PER_REVOLUTION  696   // odometry ticks per wheel revolution 
 
 // ...for the older 42mm diameter motor (white connector)  https://wiki.ardumower.de/images/d/d6/Ardumower_chassis_inside_ready.jpg
 //#define TICKS_PER_REVOLUTION  1050 /2  // odometry ticks per wheel revolution 
 
 // ...for the brushless motor april 2021   https://wiki.ardumower.de/index.php?title=Datei:BLUnit.JPG
-#define TICKS_PER_REVOLUTION  1330 /2   // 1300/2 (1194/2)  odometry ticks per wheel revolution //MrTrees: 1210 
+// #define TICKS_PER_REVOLUTION  1330 /2   // 1300/2 (1194/2)  odometry ticks per wheel revolution //MrTrees: 1210 
 
 // #define TICKS_PER_REVOLUTION  304 /2    // odometry ticks per wheel revolution (RM18)
 
@@ -249,21 +249,21 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 
 // ----- gear motors --------------------------------------------------
 // for brushless motors, study the sections (drivers, adapter, protection etc.) in the Wiki (https://wiki.ardumower.de/index.php?title=DIY_Brushless_Driver_Board)
-#define MOTOR_DRIVER_BRUSHLESS   1     // uncomment this for new brushless motor drivers
+// #define MOTOR_DRIVER_BRUSHLESS   1     // uncomment this for new brushless motor drivers
 //#define MOTOR_DRIVER_BRUSHLESS_MOW_DRV8308  1 // uncomment for brushless DRV8308 driver and mowing motor 
 //#define MOTOR_DRIVER_BRUSHLESS_MOW_A4931  1    // uncomment for brushless A3931 driver and mowing motor
 //#define MOTOR_DRIVER_BRUSHLESS_MOW_BLDC8015A 1  // uncomment for brushless BLDC8015A driver and mowing motor
-#define MOTOR_DRIVER_BRUSHLESS_MOW_JYQD 1  // uncomment for brushless JYQD driver and mowing motor (https://forum.ardumower.de/threads/jyqd-treiber-und-sunray.24811/)
+// #define MOTOR_DRIVER_BRUSHLESS_MOW_JYQD 1  // uncomment for brushless JYQD driver and mowing motor (https://forum.ardumower.de/threads/jyqd-treiber-und-sunray.24811/)
 //#define MOTOR_DRIVER_BRUSHLESS_MOW_OWL 1  // uncomment for brushless owlDrive mowing motor 
-#define MOTOR_DRIVER_BRUSHLESS_GEARS_DRV8308  1   // uncomment for brushless DRV8308 driver and gear/traction motors 
+// #define MOTOR_DRIVER_BRUSHLESS_GEARS_DRV8308  1   // uncomment for brushless DRV8308 driver and gear/traction motors 
 //#define MOTOR_DRIVER_BRUSHLESS_GEARS_A4931  1    // uncomment for brushless A4931 driver and gear/traction motors
 //#define MOTOR_DRIVER_BRUSHLESS_GEARS_BLDC8015A 1   // uncomment for brushless BLDC8015A driver and gear/traction motors
 //#define MOTOR_DRIVER_BRUSHLESS_GEARS_JYQD 1   // uncomment for brushless JYQD driver and gears/traction motor
 //#define MOTOR_DRIVER_BRUSHLESS_GEARS_OWL 1   // uncomment for brushless owlDrive gears/traction motor
 
-#define MOTOR_FAULT_CURRENT 3.5    // gear motors fault current (amps)
-#define MOTOR_TOO_LOW_CURRENT 0.005   // gear motor too low current (amps)
-#define MOTOR_OVERLOAD_CURRENT 1.0    // gear motors overload current (amps)
+#define MOTOR_FAULT_CURRENT 6.0     // gear motors fault current (amps)
+#define MOTOR_TOO_LOW_CURRENT 0.005 // gear motor too low current (amps)
+#define MOTOR_OVERLOAD_CURRENT 1.3  // gear motors overload current (amps)
 
 #define USE_LINEAR_SPEED_RAMP  true      // use a speed ramp for the linear speed //MrTree overshooting is reduced, deceleration is more agressive: keep enabled! (recommended)
 //#define USE_LINEAR_SPEED_RAMP  false      // do not use a speed ramp 
@@ -289,9 +289,9 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 // shall the mow motor be activated for normal operation? Deactivate this option for GPS tests and path tracking running tests
 #define ENABLE_MOW_MOTOR true // Default is true, set false for testing purpose to switch off mow motor permanently
 
-#define MOW_FAULT_CURRENT 5.0       // mowing motor fault current (amps)
+#define MOW_FAULT_CURRENT 8       // mowing motor fault current (amps)
 #define MOW_TOO_LOW_CURRENT 0.005   // mowing motor too low current (amps)
-#define MOW_OVERLOAD_CURRENT 3.5    // mowing motor overload current (amps)
+#define MOW_OVERLOAD_CURRENT 2    // mowing motor overload current (amps)
 
 // should the direction of mowing motor toggle each start? (yes: true, no: false)
 #define MOW_TOGGLE_DIR       true
@@ -371,13 +371,13 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 #define SONAR_ENABLE true              // should ultrasonic sensor be used?
 //#define SONAR_ENABLE false
 #define SONAR_TRIGGER_OBSTACLES false     // should sonar be used to trigger obstacles? if not, mower will only slow down
-#define SONAR_LEFT_OBSTACLE_CM   40     // slow down or stop mowing operation below this distance (cm) 
-#define SONAR_CENTER_OBSTACLE_CM 40      // slow down or stop mowing operation below this distance (cm) 
-#define SONAR_RIGHT_OBSTACLE_CM  40      // slow down or stop mowing operation below this distance (cm) 
+#define SONAR_LEFT_OBSTACLE_CM   15     // slow down or stop mowing operation below this distance (cm) 
+#define SONAR_CENTER_OBSTACLE_CM 15      // slow down or stop mowing operation below this distance (cm) 
+#define SONAR_RIGHT_OBSTACLE_CM  15      // slow down or stop mowing operation below this distance (cm) 
 
 // ------ rain sensor ----------------------------------------------------------
-#define RAIN_ENABLE true                 // if activated, mower will dock when rain sensor triggers
-//#define RAIN_ENABLE false
+// #define RAIN_ENABLE true                 // if activated, mower will dock when rain sensor triggers
+#define RAIN_ENABLE false
 
 // ------ time-of-flight distance sensor (VL53L0X) -----------------------------
 // do not use this sensor (not recommended)
@@ -390,8 +390,8 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 // see Wiki on how to install bumperduino or freewheel sensor:
 // https://wiki.ardumower.de/index.php?title=Bumper_sensor
 // https://wiki.ardumower.de/index.php?title=Free_wheel_sensor
-#define BUMPER_ENABLE true
-//#define BUMPER_ENABLE false
+//#define BUMPER_ENABLE true
+#define BUMPER_ENABLE false
 #define BUMPER_DEADTIME 1000  // linear motion dead-time (ms) after bumper is allowed to trigger
 #define BUMPER_TRIGGER_DELAY  100 // bumper must be active for (ms) to trigger
 #define BUMPER_MAX_TRIGGER_TIME 20  // if bumpersensor stays permanent triggered mower will stop with bumper error (time in seconds; 0 = disabled)
@@ -404,14 +404,18 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 
 //#define CURRENT_FACTOR 0.5     // PCB1.3 (non-bridged INA169, max. 2.5A)
 //#define CURRENT_FACTOR 1.0   // PCB1.3 (bridged INA169, max. 5A)
-//#define CURRENT_FACTOR 1.98   // PCB1.4 (non-bridged INA169, max. 2.5A)
-#define CURRENT_FACTOR 2.941  // PCB1.4 (bridged INA169, max. 5A)
+#define CURRENT_FACTOR 1.98   // PCB1.4 (non-bridged INA169, max. 2.5A)
+// #define CURRENT_FACTOR 2.941  // PCB1.4 (bridged INA169, max. 5A)
 
-#define GO_HOME_VOLTAGE   22  // start going to dock below this voltage
+#define GO_HOME_VOLTAGE   23.5  // start going to dock below this voltage
 // The battery will charge if both battery voltage is below that value and charging current is above that value.
-#define BAT_FULL_VOLTAGE  28.8  // start mowing again at this voltage
+#define BAT_FULL_VOLTAGE  28.3  // start mowing again at this voltage
 #define BAT_FULL_CURRENT  0.01   // start mowing again below this charging current (amps)
 #define BAT_FULL_SLOPE    0.002  // start mowing again below this voltage slope
+
+// if an INA226 is used to measure battery voltage, instead of less accurate analog voltage measurement
+#define INA226_BATT_VOLT // comment out if no INA226 is used measuring battery voltage
+#define INA226_ADDRESS 0x40
 
 // https://wiki.ardumower.de/index.php?title=Ardumower_Sunray#Automatic_battery_switch_off
 #define BAT_SWITCH_OFF_IDLE  true         // switch off if idle (JP8 must be set to autom.)
@@ -473,13 +477,12 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 #define OBSTACLE_DETECTION_ROTATION true // detect robot rotation stuck (requires IMU)
 //#define OBSTACLE_DETECTION_ROTATION false   // NOTE: recommended to turn this off for slope environment   
 #define ROTATION_TIMEOUT              5000    //15000 Timeout of rotation movement that triggers an obstacle with escapeReverse
-#define ROTATION_TIME                 1000    //3000 Time the code expects to rotate without a IMU yaw difference
+#define ROTATION_TIME                 3000    //3000 Time the code expects to rotate without a IMU yaw difference
 
 
 #define OBSTACLE_AVOIDANCE true   // try to find a way around obstacle
 //#define OBSTACLE_AVOIDANCE false  // stop robot on obstacle
-#define OBSTACLE_DIAMETER 1.2   // choose diameter of obstacles placed in front of robot (m) for obstacle avoidance
-
+#define OBSTACLE_DIAMETER 0.6   // choose diameter of obstacles placed in front of robot (m) for obstacle avoidance
 #define DISABLE_MOW_MOTOR_AT_OBSTACLE false // switch off mow motor while escape at detected obstacle; set false if mow motor shall not be stopped at detected obstacles
 
 // detect robot being kidnapped? robot will try GPS recovery if distance to tracked path is greater than a certain value
@@ -504,21 +507,23 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 #define DOCK_RETRY_TOUCH true   // robot will retry touching docking contacts (max. 1cm) if loosing docking contacts during charging
 //#define DOCK_RETRY_TOUCH false   // robot will not retry touching docking contacts (max. 1cm) if loosing docking contacts during charging
 
-#define DOCK_UNDOCK_TRACKSLOW_DISTANCE 3 // set distance (m) from dock for trackslow (speed limit)
+#define DOCK_UNDOCK_TRACKSLOW_DISTANCE 1.5 // set distance (m) from dock for trackslow (speed limit)
 
-#define UNDOCK_IGNORE_GPS_DISTANCE 2 // set distance (m) from dock to ignore gps while undocking
+#define UNDOCK_IGNORE_GPS_DISTANCE 1.2 // set distance (m) from dock to ignore gps while undocking
 
 // ---- path tracking -----------------------------------
 
 // below this robot-to-target distance (m) a target is considered as reached
-#define TARGET_REACHED_TOLERANCE 0.07
+#define TARGET_REACHED_TOLERANCE 0.03
 
 // stanley control for path tracking - determines gain how fast to correct for lateral path errors
-#define STANLEY_CONTROL_P_NORMAL  3.4   // 3.0 for path tracking control (angular gain) when mowing
-#define STANLEY_CONTROL_K_NORMAL  2.3   // 1.0 for path tracking control (lateral gain) when mowing
+//#define STANLEY_CONTROL_P_NORMAL  3.4   // 3.0 for path tracking control (angular gain) when mowing
+//#define STANLEY_CONTROL_K_NORMAL  2.3   // 1.0 for path tracking control (lateral gain) when mowing
+#define STANLEY_CONTROL_P_NORMAL  3.0   // 3.0 for path tracking control (angular gain) when mowing
+#define STANLEY_CONTROL_K_NORMAL  1.0   // 1.0 for path tracking control (lateral gain) when mowing
 
-#define STANLEY_CONTROL_P_SLOW    1.0   // 3.0 for path tracking control (angular gain) when docking tracking
-#define STANLEY_CONTROL_K_SLOW    0.05  // 0.1 for path tracking control (lateral gain) when mowing or docking
+#define STANLEY_CONTROL_P_SLOW    3.0   // 3.0 for path tracking control (angular gain) when docking tracking
+#define STANLEY_CONTROL_K_SLOW    0.1  // 0.1 for path tracking control (lateral gain) when mowing or docking
 
 
 // ----- other options --------------------------------------------
@@ -528,8 +533,8 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
                                  //  1 beep=stop, 6 beeps=start, 5 beeps=dock, 3 beeps=R/C mode ON/OFF, 9 beeps=shutdown, 12 beeps=WiFi WPS
 //#define BUTTON_CONTROL false   // additional features deactivated
 
-#define USE_TEMP_SENSOR true  // only activate if temp sensor (htu21d) connected
-//#define USE_TEMP_SENSOR false  
+// #define USE_TEMP_SENSOR true  // only activate if temp sensor (htu21d) connected
+#define USE_TEMP_SENSOR false  
 
 #define DOCK_OVERHEAT_TEMP 70    // if temperature above this degreeC, mower will dock (MrTree: CPU temp, if no Battempsensor found)
 #define DOCK_TOO_COLD_TEMP 5    // if temperature below this degreeC, mower will dock 
@@ -538,7 +543,7 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 // use PCB pin 'mow' for R/C model control speed and PCB pin 'steering' for R/C model control steering, 
 // also connect 5v and GND and activate model R/C control via PCB P20 start button for 3 sec.
 // more details: https://wiki.ardumower.de/index.php?title=Ardumower_Sunray#R.2FC_model
-#define RCMODEL_ENABLE 1  // set to 1 to turn on R/C control, 0 = off
+#define RCMODEL_ENABLE 0  // set to 1 to turn on R/C control, 0 = off
 
 #define BUZZER_ENABLE 1 // uncomment to disable
 
