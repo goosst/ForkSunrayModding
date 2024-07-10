@@ -119,7 +119,7 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 #define MOWMOTOR_PID_KI             0.002 // (0.04 (Mowmotordriver DRV8308/JYQD))
 #define MOWMOTOR_PID_KD             0.00  // (0.0000 (Mowmotordriver DRV8308/JYQD))
 //adaptive_speed settings on RPM or LOAD of mowmotor (consider if you have mowmotor odometrie)
-#define ADAPTIVE_SPEED              false  // if true, mowing speed will adjust to RPM or MOWMOTORPOWER of mow motor on all forward speed mow operations
+#define ADAPTIVE_SPEED              true  // if true, mowing speed will adjust to RPM or MOWMOTORPOWER of mow motor on all forward speed mow operations
 #define ADAPTIVE_SPEED_MODE         1     // (1, 2) adaptive speed modes. mode 1 - uses mowmotorpower measurement for speeding up/down; mode 2 - uses rpm measurement of mowmotor for speeding up/down
 #define MOWPOWERMAX_AUTO            true  // uses highest actual measured mowPower during operation, if true MOWPOWERMAX is ignored
 #define MOWPOWERMIN                 10.0  // (Watt) idle Power of Mowmotor or minimum load power of mowmotor, if under this load mower will have maximum speed
@@ -155,13 +155,13 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 #define GPS_REBOOT                  true  // if false and DOCK_POINT_GPS_REBOOT is not 0, mower will wait at the DOCK_POINT_GPS_REBOOT point for fix without rebooting GPS, if false and DOCK_POINT_GPS_REBOOT = 0 this function is off (hopefully)
 #define GPSWAITREBOOT               15000 // (ms) time to wait after rebooting gps for response from ublox? 
 #define GPS_STABLETIME              30000 // (ms) GPS Time with fix solution, before continueing from DOCK_POINT_GPS_REBOOT after undock  
-#define DOCK_POINT_GPS_REBOOT       3     // (pt)(MrTree: Warning, you need 3 more dockpoints than this number, or there will be bugs! so, if there is 4 defined, you need 7 on the Map!) Svol0: dockingpoint number (counted from last dockingpoint) where the gps will be rebooted and waited for gps-fix by undocking. 0 = no gps reboot by undocking. MrTree: if not "0" and GPS_REBOOT = false, mower will wait at the point for fix without rebooting GPS
+#define DOCK_POINT_GPS_REBOOT       2     // (pt)(MrTree: Warning, you need 3 more dockpoints than this number, or there will be bugs! so, if there is 4 defined, you need 7 on the Map!) Svol0: dockingpoint number (counted from last dockingpoint) where the gps will be rebooted and waited for gps-fix by undocking. 0 = no gps reboot by undocking. MrTree: if not "0" and GPS_REBOOT = false, mower will wait at the point for fix without rebooting GPS
 #define DOCK_SLOW_ONLY_LAST_POINTS  4     // (pt) Svol0: dockingpoint number (counted from last dockingpoint) where slow speed will be used to reach the dockingstation (0 = all points will be reached with slow speed)
 //keep mower from rotating in dock by all means, needs situation dependent tuning, so be aware!
 #define DOCK_NO_ROTATION            true  // if true, rotation for the mower when reaching or leaving the last dockpoint is not allowed! Make sure mower comes just before the dock in a straight line from the point before, then the last point is the dockposition, on that path angular steering is not allowed!
 #define DOCK_NO_ROTATION_DISTANCE   1.2  // (m) distance to dockpoint to stop angular motion of mower, make sure mower comes straight to dock and the point distance from dockpoint to pointbefore is double this number!
-#define DOCK_NO_ROTATION_TIMER      12000 // (ms) if mower doesnt hit the charger in given time after passing dockpoint before last dockpoint(charger), an obstacle will be triggered and mower will reverse to gps reboot point and try again.
-#define DOCK_NO_ROTATION_SPEED      0.15  // (m/s) (original it was 0.10, made it changeable...) when angular is not allowed while going to dockposition, this speed is used
+#define DOCK_NO_ROTATION_TIMER      45000 // (ms) if mower doesnt hit the charger in given time after passing dockpoint before last dockpoint(charger), an obstacle will be triggered and mower will reverse to gps reboot point and try again.
+#define DOCK_NO_ROTATION_SPEED      0.05  // (m/s) (original it was 0.10, made it changeable...) when angular is not allowed while going to dockposition, this speed is used
 //GPS
 #define GPS_RESET_WAIT_FIX          true  // reset GPS if mower is in a float timeout?
 #define GPS_RESET_WAIT_FIX_TIME     15    // (min) time in minutes to reset gps if mower is in a float timeout without getting fix within GPS_RESET_WAIT_FIX_TIME 
@@ -368,16 +368,16 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 // https://wiki.ardumower.de/index.php?title=Ardumower_Sunray#Ultrasonic_sensor
 
 #define SONAR_INSTALLED 1              // uncomment if ultrasonic sensors are installed
-#define SONAR_ENABLE true              // should ultrasonic sensor be used?
-//#define SONAR_ENABLE false
+//#define SONAR_ENABLE true              // should ultrasonic sensor be used?
+#define SONAR_ENABLE false
 #define SONAR_TRIGGER_OBSTACLES false     // should sonar be used to trigger obstacles? if not, mower will only slow down
 #define SONAR_LEFT_OBSTACLE_CM   15     // slow down or stop mowing operation below this distance (cm) 
 #define SONAR_CENTER_OBSTACLE_CM 15      // slow down or stop mowing operation below this distance (cm) 
 #define SONAR_RIGHT_OBSTACLE_CM  15      // slow down or stop mowing operation below this distance (cm) 
 
 // ------ rain sensor ----------------------------------------------------------
-// #define RAIN_ENABLE true                 // if activated, mower will dock when rain sensor triggers
-#define RAIN_ENABLE false
+ #define RAIN_ENABLE true                 // if activated, mower will dock when rain sensor triggers
+//#define RAIN_ENABLE false
 
 // ------ time-of-flight distance sensor (VL53L0X) -----------------------------
 // do not use this sensor (not recommended)
