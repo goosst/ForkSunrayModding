@@ -407,9 +407,9 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 #define CURRENT_FACTOR 1.98   // PCB1.4 (non-bridged INA169, max. 2.5A)
 // #define CURRENT_FACTOR 2.941  // PCB1.4 (bridged INA169, max. 5A)
 
-#define GO_HOME_VOLTAGE   23.5  // start going to dock below this voltage
+#define GO_HOME_VOLTAGE   23.7  // start going to dock below this voltage
 // The battery will charge if both battery voltage is below that value and charging current is above that value.
-#define BAT_FULL_VOLTAGE  28.3  // start mowing again at this voltage
+#define BAT_FULL_VOLTAGE  28.0  // start mowing again at this voltage
 #define BAT_FULL_CURRENT  0.01   // start mowing again below this charging current (amps)
 #define BAT_FULL_SLOPE    0.002  // start mowing again below this voltage slope
 
@@ -419,9 +419,9 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 
 // https://wiki.ardumower.de/index.php?title=Ardumower_Sunray#Automatic_battery_switch_off
 #define BAT_SWITCH_OFF_IDLE  true         // switch off if idle (JP8 must be set to autom.)
-#define BAT_SWITCH_OFF_IDLE_TIME 500      // MrTree seconds when switching of in idle state
+#define BAT_SWITCH_OFF_IDLE_TIME 600      // MrTree seconds when switching of in idle state
 #define BAT_SWITCH_OFF_UNDERVOLTAGE  true  // switch off if undervoltage (JP8 must be set to autom.)
-#define BAT_SWITCH_OFF_VOLTAGE 20.0       //switch off mower if under this voltage
+#define BAT_SWITCH_OFF_VOLTAGE 20.4       //switch off mower if under this voltage
 
 // ------ GPS ------------------------------------------
 // ------- RTK GPS module -----------------------------------
@@ -501,8 +501,8 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 //#define DOCK_IGNORE_GPS false     // use GPS fix in docking station and IMU for GPS float/invalid
 #define DOCK_IGNORE_GPS true     // ignore GPS fix in docking station and use IMU-only (use this if robot gets false GPS fixes in your docking station)
 
-//#define DOCK_AUTO_START true     // robot will automatically continue mowing after docked automatically
-#define DOCK_AUTO_START false      // robot will not automatically continue mowing after docked automatically
+#define DOCK_AUTO_START true     // robot will automatically continue mowing after docked automatically
+//#define DOCK_AUTO_START false      // robot will not automatically continue mowing after docked automatically
 
 #define DOCK_RETRY_TOUCH true   // robot will retry touching docking contacts (max. 1cm) if loosing docking contacts during charging
 //#define DOCK_RETRY_TOUCH false   // robot will not retry touching docking contacts (max. 1cm) if loosing docking contacts during charging
