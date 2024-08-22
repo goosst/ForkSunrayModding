@@ -133,17 +133,17 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 //escapeLawn operation, mower will backup on a mowmotor stall and retry with given values... after the first try and still stalling, it backs up and waits for mowmotor to recover
 #define ESCAPE_LAWN                 false  // mower drives reverse if true and RPM stall of mow motor is detected by more than MOW_RPMtr_STALL(percentage), only available if ENABLE_RPM_FAULT_DETECTION true
 #define ESCAPE_LAWN_MODE             1    // (1, 2) escape lawn modes to trigger escape becouse of high motormow load: mode 1 - uses mowmotorpower for triggering, mode 2 - uses rpm for triggering
-#define MOW_POWERtr_STALL           80    // (%, only used if ESCAPE_LAWN_MODE = 1) if power of mowmotor exceeds e.g 90% of MOWPOWERMAX, escapelawn is triggered 
+#define MOW_POWERtr_STALL           86    // (%, only used if ESCAPE_LAWN_MODE = 1) if power of mowmotor exceeds e.g 90% of MOWPOWERMAX, escapelawn is triggered 
 #define MOW_POWERtr_SLOW            70    // (%, only used if ESCAPE_LAWN_MODE = 1) if power of mowmotor exceeds e.g 70% of MOWPOWERMAX, keepslow is triggered
 #define MOW_RPMtr_STALL             60    // (70)(%, only used if ESCAPE_LAWN_MODE = 2) if RPM of mowmotor stalls under % of MOW_RPM_NORMAL mower will back up with ESCAPELAWNDISTANCE and ESCAPELAWNSPEED and try again
 #define MOW_RPMtr_SLOW              80    // (85)(%, only used if ESCAPE_LAWN_MODE = 2) if RPM of mowmotor stalls under % of MOW_RPM_NORMAL mower will trigger a keepSlow state with KEEPSLOWSPEED
-#define ESCAPELAWNSPEED             0.35  // (m/s) speed of mower reverse due to MOW_RPM_STALL trigger
+#define ESCAPELAWNSPEED             0.14  // (m/s) speed of mower reverse due to MOW_RPM_STALL trigger
 #define ESCAPELAWNDISTANCE          0.5   // (m) distance mower reverses with ESCAPELAWNSPEED due to MOW_RPM_STALL triggered
 #define ESCAPELAWNWAITTIME          5000  // (ms)after reversing the second time within ESCAPELAWNTIMER, mower will wait for this time before continue (recover rpm)
 #define ESCAPELAWNTIMER             20000 // (ms)timer to reset retries of ESCAPELAWN, if time is met and retries stay under MAXRETRY triggercounter will reset, otherwise there will be an obstacle error
 #define ESCAPELAWN_DEADTIME         3000  // (ms)deadtime between allowed ESCAPELAWN triggers (deadtime should be the reverse time of action and be calculated in code :| )
 #define MAXRETRY                    5     // number of possible retries of ESCAPELAWN within ESCAPELAWNTIMER until there will be an obstacle error or obstacle avoidance
-#define MAXRETRYOBSTACLE            false // if true, ESCAPELAWN will trigger Obstacle avoidance when to many MAXRETRY´s and will not trigger an error
+#define MAXRETRYOBSTACLE            true // if true, ESCAPELAWN will trigger Obstacle avoidance when to many MAXRETRY´s and will not trigger an error
 #define RETRYSLOWSPEED              0.15  // (ms) if ESCAPELAWN true, mower will back up with ESCAPELAWNSPEED if RPM stall is detected and retry mowing forward with RETRYSPEED until RETRYSLOWTIME is met, then it will continue with normal Speed
 #define KEEPSLOWSPEED               0.25  // mower will use this speed if there is a rpm stall (%) of mowingblades defined by MOW_RPMtr_SLOW
 #define RETRYSLOWTIME               15000 // (ms) mower will continue slow with RETRY_SLOW_SPEED after ESCAPELAWN operation (reversing triggered by MOW_RPMtr_RETRY (%)) for RETRYSLOWTIME, if a MOW_RPMtr_SLOW will happen again in this retryslowstate, mower resets this timer until no rpm stall occurs in set time
@@ -165,7 +165,7 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 //GPS
 #define GPS_RESET_WAIT_FIX          true  // reset GPS if mower is in a float timeout?
 #define GPS_RESET_WAIT_FIX_TIME     15    // (min) time in minutes to reset gps if mower is in a float timeout without getting fix within GPS_RESET_WAIT_FIX_TIME 
-#define GPS_NO_SPEED_TIME           2000  // (ms) time for GPS no speed trigger --> obstacle
+#define GPS_NO_SPEED_TIME           3700  // (ms) time for GPS no speed trigger --> obstacle
 //other
 #define MOW_START_AT_WAYMOW         true // mowmotor only starts if way state of mower is waymow for the first time, used for mowmotor not starting directly at dock, but at mow area. This is a onetime trigger that only works when mower is ---> undocking ---> wayfree ---> mowarea ---> start mowmotor. After this, mowmotor will behave like it used to be
 //obstacle behaviour when OBSTACLE_ROTATION is enabled and escapeForward is triggered due to IMUYaw difference (wheel at backside, popo situation)
@@ -447,7 +447,7 @@ Also, you may choose the serial port below for serial monitor output (CONSOLE).
 // detect if robot is actually moving (obstacle detection via GPS feedback)
 #define GPS_MOTION_DETECTION          true    // if robot is not moving trigger obstacle avoidance (recommended)
 //#define GPS_MOTION_DETECTION        false   // ignore if robot is not moving
-#define GPS_MOTION_DETECTION_TIMEOUT  3       // (5) timeout for motion (secs)
+#define GPS_MOTION_DETECTION_TIMEOUT  4       // (5) timeout for motion (secs)
 #define GPS_MOTION_DETECTION_DELTA    0.10     // (0.20) distance mower must be moving in timeouttime until gps no motion is triggered
 
 // configure ublox f9p with optimal settings (will be stored in f9p RAM only)
